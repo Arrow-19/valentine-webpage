@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Be My Valentine 🍩❤️</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #1a0206;
+        --bg-soft: #32030b;
+        --accent: #ff4b6a;
+        --accent-light: #ff8aa5;
+        --accent-soft: rgba(255, 75, 106, 0.16);
+        --text-main: #fff4f6;
+        --text-soft: #ffc5d2;
+        --card: #26020a;
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        color: var(--text-main);
+        background:
+          radial-gradient(circle at top left, #ff8aa5 0, transparent 50%),
+          radial-gradient(circle at bottom right, #ff4b6a 0, transparent 50%),
+          radial-gradient(circle at 120% 0, #ffb347 0, transparent 55%),
+          var(--bg);
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+      }
+
+      .noise-overlay {
+        pointer-events: none;
+        position: fixed;
+        inset: 0;
+        opacity: 0.15;
+        mix-blend-mode: soft-light;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");
+        z-index: 0;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        flex: 1;
+        max-width: 480px;
+        padding: 2.5rem 1.5rem 2.75rem;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+      }
+
+      .card {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), #26020a);
+        border-radius: 28px;
+        padding: 2.2rem 1.7rem 2.3rem;
+        box-shadow: var(--shadow);
+        border: 1px solid rgba(255, 192, 203, 0.28);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.75rem;
+      }
+
+      .donut-orbit {
+        position: relative;
+        width: 210px;
+        aspect-ratio: 1 / 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .donut-orbit::before,
+      .donut-orbit::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2px dashed rgba(255, 192, 203, 0.4);
+        animation: orbit 18s linear infinite;
+      }
+
+      .donut-orbit::after {
+        inset: 14px;
+        border-style: solid;
+        opacity: 0.35;
+        animation-direction: reverse;
+        animation-duration: 26s;
+      }
+
+      .donut {
+        position: relative;
+        width: 140px;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 30% 25%, #ffd9e0 0, #ffd9e0 22%, #ffb347 22.1%),
+          radial-gradient(circle at 60% 72%, #ffd9e0 0, #ffd9e0 18%, #ffb347 18.1%),
+          conic-gradient(
+            from 200deg,
+            #ff8aa5 30deg,
+            #ff4b6a 110deg,
+            #ffb347 200deg,
+            #ff8aa5 300deg,
+            #ff4b6a 360deg
+          );
+        box-shadow:
+          0 18px 40px rgba(0, 0, 0, 0.55),
+          inset 0 0 0 6px rgba(255, 255, 255, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .donut::before {
+        content: "";
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 25%, #ffd3da 0, #ffc1cd 48%, #df7d9b 100%);
+        box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.55);
+      }
+
+      .sprinkle {
+        position: absolute;
+        width: 10px;
+        height: 4px;
+        border-radius: 999px;
+        background: #fff7fb;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+        transform-origin: center;
+      }
+
+      .sprinkle:nth-child(1) {
+        top: 18%;
+        left: 30%;
+        background: #fffa9b;
+        transform: rotate(-16deg);
+      }
+
+      .sprinkle:nth-child(2) {
+        top: 26%;
+        right: 18%;
+        background: #b3ffde;
+        transform: rotate(24deg);
+      }
+
+      .sprinkle:nth-child(3) {
+        bottom: 26%;
+        left: 24%;
+        background: #ffd1f3;
+        transform: rotate(-36deg);
+      }
+
+      .sprinkle:nth-child(4) {
+        bottom: 18%;
+        right: 30%;
+        background: #b6b6ff;
+        transform: rotate(18deg);
+      }
+
+      .sprinkle:nth-child(5) {
+        top: 50%;
+        left: 14%;
+        background: #ffb8c6;
+        transform: rotate(8deg);
+      }
+
+      .sprinkle:nth-child(6) {
+        top: 50%;
+        right: 12%;
+        background: #ffffff;
+        transform: rotate(-14deg);
+      }
+
+      .floating-donuts {
+        position: absolute;
+        inset: -40px;
+        pointer-events: none;
+        opacity: 0.7;
+      }
+
+      .mini-donut {
+        position: absolute;
+        font-size: 1.85rem;
+        filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.7));
+        animation: float 7s ease-in-out infinite;
+      }
+
+      .mini-donut:nth-child(1) {
+        top: 4%;
+        left: 4%;
+        animation-duration: 8s;
+      }
+
+      .mini-donut:nth-child(2) {
+        top: 12%;
+        right: 6%;
+        animation-duration: 10s;
+      }
+
+      .mini-donut:nth-child(3) {
+        bottom: 4%;
+        left: 2%;
+        animation-duration: 9.5s;
+      }
+
+      .mini-donut:nth-child(4) {
+        bottom: 16%;
+        right: 3%;
+        animation-duration: 7.5s;
+      }
+
+      .text-block {
+        text-align: center;
+        padding: 0 0.35rem;
+      }
+
+      .kicker {
+        font-size: 0.8rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        margin-bottom: 0.35rem;
+      }
+
+      .headline {
+        font-family: "Pacifico", system-ui, cursive;
+        font-size: 2.1rem;
+        line-height: 1.18;
+        color: #ffffff;
+        text-shadow:
+          0 12px 30px rgba(0, 0, 0, 0.8),
+          0 0 26px rgba(255, 133, 163, 0.8);
+        margin-bottom: 0.75rem;
+      }
+
+      .nickname {
+        font-size: 1.05rem;
+        color: var(--accent-light);
+        font-weight: 600;
+      }
+
+      .nickname span {
+        padding: 0.15rem 0.65rem;
+        border-radius: 999px;
+        background: rgba(255, 75, 106, 0.2);
+        border: 1px solid rgba(255, 192, 203, 0.55);
+        backdrop-filter: blur(18px);
+      }
+
+      .subcopy {
+        margin-top: 0.65rem;
+        font-size: 0.9rem;
+        color: var(--text-soft);
+      }
+
+      .buttons-wrap {
+        position: relative;
+        width: 100%;
+        height: 80px;
+        margin-top: 0.6rem;
+      }
+
+      .buttons-inner {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 999px;
+        padding: 0.8rem 1.6rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition:
+          transform 0.18s ease-out,
+          box-shadow 0.18s ease-out,
+          background 0.2s ease-out,
+          color 0.2s ease-out;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        white-space: nowrap;
+      }
+
+      .btn-yes {
+        background: radial-gradient(circle at 20% 0, #ffe1eb 0, #ff4b6a 55%, #b0132d 100%);
+        color: #2b0207;
+        box-shadow:
+          0 14px 28px rgba(0, 0, 0, 0.75),
+          0 0 30px rgba(255, 90, 130, 0.85);
+      }
+
+      .btn-yes:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow:
+          0 18px 36px rgba(0, 0, 0, 0.9),
+          0 0 36px rgba(255, 120, 160, 0.95);
+      }
+
+      .btn-yes:active {
+        transform: translateY(0) scale(0.98);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.9);
+      }
+
+      .btn-no {
+        position: absolute;
+        background: rgba(10, 1, 4, 0.9);
+        border-radius: 999px;
+        padding: 0.72rem 1.6rem;
+        color: var(--accent-light);
+        border: 1px dashed rgba(255, 192, 203, 0.55);
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.9);
+      }
+
+      .btn-no:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-no:active {
+        transform: translateY(0) scale(0.97);
+      }
+
+      .hint {
+        font-size: 0.78rem;
+        color: rgba(255, 210, 223, 0.9);
+        text-align: center;
+        opacity: 0.9;
+      }
+
+      .hint span {
+        opacity: 0.7;
+      }
+
+      .footer-text {
+        font-size: 0.8rem;
+        color: rgba(255, 214, 225, 0.85);
+        text-align: center;
+        margin-top: -0.4rem;
+      }
+
+      .footer-text strong {
+        color: #ffe1eb;
+      }
+
+      .footer-text .heart {
+        display: inline-block;
+        transform-origin: center;
+        animation: pulse 1.4s ease-in-out infinite;
+      }
+
+      @keyframes orbit {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        40% {
+          transform: scale(1.2);
+        }
+      }
+
+      @media (min-width: 480px) {
+        .card {
+          padding: 2.4rem 2.1rem 2.6rem;
+        }
+
+        .headline {
+          font-size: 2.4rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <main class="page">
+      <section class="card" aria-live="polite">
+        <div class="donut-orbit" aria-hidden="true">
+          <div class="donut">
+            <div class="sprinkle"></div>
+            <div class="sprinkle"></div>
+            <div class="sprinkle"></div>
+            <div class="sprinkle"></div>
+            <div class="sprinkle"></div>
+            <div class="sprinkle"></div>
+          </div>
+          <div class="floating-donuts">
+            <div class="mini-donut">🍩</div>
+            <div class="mini-donut">❤️</div>
+            <div class="mini-donut">🍩</div>
+            <div class="mini-donut">💕</div>
+          </div>
+        </div>
+
+        <div class="text-block">
+          <!--<div class="kicker">Valentine's Day • 2026</div>-->
+          <h1 class="headline">Will you be my Valentine?</h1>
+          <p class="nickname">
+            For my <span>കണ്മണി</span> 🍩
+          </p>
+          <p class="subcopy">
+            Sorry I could not make this year's Valentines as special as you are. You deserve the world love.
+          </p>
+        </div>
+
+        <div class="buttons-wrap" id="buttons-wrap">
+          <div class="buttons-inner">
+            <button class="btn btn-yes" id="yes-btn" type="button">
+              <span>Yes</span>
+              <span aria-hidden="true">❤️</span>
+            </button>
+          </div>
+          <button class="btn btn-no" id="no-btn" type="button">
+            <span>No</span>
+          </button>
+        </div>
+
+        <p class="hint">
+          <span>btw...</span> saying "No" might give you a headache and you already get a lot of those these days. 😌
+        </p>
+        <!--<p class="footer-text">
+          Built with <span class="heart">♥</span> and extra sprinkles, just for you.
+        </p>-->
+      </section>
+    </main>
+
+    <!-- canvas-confetti via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
+
